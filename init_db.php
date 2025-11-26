@@ -1,5 +1,4 @@
 <?php
-// Tên dự án: CSN - CN
 
 // Thư mục DB
 $dbDir = __DIR__ . '/db';

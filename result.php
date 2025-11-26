@@ -5,10 +5,9 @@ if(!isset($_SESSION['last_image'])){ header("Location: upload.php"); exit; }
 
 $image = $_SESSION['last_image'];
 
-// gọi tesseract OCR với tiếng Việt + tiếng Anh
 $output = shell_exec("tesseract ".escapeshellarg($image)." stdout -l vie+eng");
 
-// lưu kết quả vào DB
+// lưu kết quả:
 $db = new PDO('sqlite:db/database.sqlite');
 $stmt = $db->prepare("INSERT INTO ocr_history (user_id, image_path, result, created_at) VALUES (?, ?, ?, ?)");
 $stmt->execute([$_SESSION['user_id'], $image, $output, date("Y-m-d H:i:s")]);
