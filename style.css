@@ -165,4 +165,18 @@ a:hover { color: #005b9e; }
 #theme-toggle:hover {
     transform: rotate(20deg);
 }
+/* ===== OCR TEXT FORMAT ===== */
+.ocr-text {
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    white-space: pre;
+}
 
+
+/* DARK MODE */
+body.theme-dark .ocr-text {
+    background: #ffffff;
+    color: #000;
+    border-color: #ccc;
+}

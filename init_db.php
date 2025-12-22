@@ -50,5 +50,5 @@ $db->exec("CREATE TABLE IF NOT EXISTS ocr_history (
 )");
 echo "✅ Bảng 'ocr_history' đã sẵn sàng.<br>";
 
-echo "<br>🎉 CSN - CN Database đã được khởi tạo hoàn chỉnh!";
+echo "<br>🎉 CSN Database đã được khởi tạo hoàn chỉnh!";
 ?>
