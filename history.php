@@ -2,7 +2,7 @@
 session_start();
 if(!isset($_SESSION['user_id'])){ header("Location: login.php"); exit; }
 
-require __DIR__ . '/../init_db.php'; // kết nối DB
+require __DIR__ . '../init_db.php';
 $stmt = $db->prepare("SELECT * FROM ocr_history WHERE user_id = ? ORDER BY created_at DESC");
 $stmt->execute([$_SESSION['user_id']]);
 $records = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -13,7 +13,6 @@ $records = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
 <meta charset="UTF-8">
 <title>Lịch sử OCR | Scan2Text</title>
-<link rel="stylesheet" href="style.css">
 <style>
 body{
     margin:0;
@@ -36,15 +35,8 @@ a{text-decoration:none;}
     top:0;
     z-index:100;
 }
-.header .logo{
-    font-size:1.6rem;
-    font-weight:700;
-}
-.header nav a{
-    margin-left:25px;
-    color:#fff;
-    font-weight:500;
-}
+.header .logo{font-size:1.6rem;font-weight:700;}
+.header nav a{margin-left:25px;color:#fff;font-weight:500;}
 
 /* ===== MAIN ===== */
 .container{
@@ -58,59 +50,52 @@ h2{
     margin-bottom:30px;
 }
 
-/* ===== HISTORY ITEMS ===== */
+/* ===== HISTORY ITEMS FLEX ===== */
 .history{
+    display:flex;
+    align-items:flex-start;
     background:#fff;
     border-radius:15px;
     padding:20px;
     margin-bottom:20px;
     box-shadow:0 8px 20px rgba(0,0,0,0.08);
     transition:0.3s;
+    gap:25px;
 }
 .history:hover{
     transform:translateY(-3px);
     box-shadow:0 12px 30px rgba(0,0,0,0.12);
 }
+
+/* ===== IMAGE ===== */
 .history img{
-    max-width:100%;
+    width:250px; /* ảnh lớn hơn */
+    height:250px;
+    object-fit:cover;
     border-radius:12px;
-    margin-bottom:10px;
-    transition:0.3s;
+    flex-shrink:0;
 }
-.history img:hover{
-    transform:scale(1.03);
-    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+
+/* ===== CONTENT ===== */
+.history-content{
+    flex:1; /* nội dung chiếm phần còn lại */
 }
-.history pre{
+.history-content strong{display:block; margin-bottom:5px;}
+.history-content pre{
     background:#f4f6f9;
     padding:12px;
     border-radius:10px;
     overflow-x:auto;
     font-family: 'Courier New', monospace;
     white-space:pre-wrap;
+    margin-bottom:5px;
+    max-height:220px;
+    overflow-y:auto;
 }
-.history small{
+.history-content small{
     display:block;
-    margin-top:8px;
     color:#555;
     font-size:0.85rem;
-}
-
-/* ===== BUTTON ===== */
-button{
-    padding:12px 25px;
-    background:#0b5ed7;
-    color:#fff;
-    border:none;
-    border-radius:10px;
-    font-size:1rem;
-    font-weight:500;
-    cursor:pointer;
-    transition:0.25s;
-}
-button:hover{
-    background:#094bb5;
-    transform:translateY(-2px);
 }
 
 /* ===== FOOTER ===== */
@@ -124,40 +109,40 @@ button:hover{
 }
 
 /* ===== RESPONSIVE ===== */
-@media(max-width:700px){
+@media(max-width:900px){
     .history{
-        padding:15px;
+        flex-direction:column;
+        align-items:center;
+        text-align:center;
     }
-    button{
-        width:100%;
-    }
+    .history img{width:80%; height:auto;}
+    .history-content{flex:unset;}
 }
 </style>
 </head>
-
 <body>
 
-<!-- HEADER -->
 <div class="header">
     <div class="logo">Scan2Text</div>
     <nav>
         <a href="upload.php">Tải ảnh OCR</a>
         <a href="index.php">Trang chủ</a>
-        <a href="\CN\logout.php">Đăng xuất</a>
+        <a href="logout.php">Đăng xuất</a>
     </nav>
 </div>
 
-<!-- MAIN -->
 <div class="container">
 <h2>Lịch sử OCR</h2>
 
 <?php if($records): ?>
     <?php foreach($records as $r): ?>
         <div class="history">
-            <img src="<?php echo $r['image_path']; ?>" alt="Ảnh OCR">
-            <strong>Kết quả OCR:</strong>
-            <pre><?php echo htmlspecialchars($r['result']); ?></pre>
-            <small>Ngày: <?php echo $r['created_at']; ?></small>
+            <img src="<?= $r['image_path'] ?>" alt="Ảnh OCR">
+            <div class="history-content">
+                <strong>Kết quả OCR:</strong>
+                <pre><?= htmlspecialchars($r['result']) ?></pre>
+                <small>Ngày: <?= $r['created_at'] ?></small>
+            </div>
         </div>
     <?php endforeach; ?>
 <?php else: ?>
@@ -165,7 +150,6 @@ button:hover{
 <?php endif; ?>
 </div>
 
-<!-- FOOTER -->
 <div class="footer">
     © <?= date('Y') ?> Scan2Text · Hệ thống OCR · PHP & SQLite
 </div>

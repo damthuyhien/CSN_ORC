@@ -1,0 +1,293 @@
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:'Segoe UI', Tahoma, sans-serif;
+    background:#eef2f7;
+    color:#333;
+    line-height:1.6;
+    overflow-x:hidden;
+}
+
+/* BACKGROUND DYNAMIC */
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:
+        radial-gradient(circle at 15% 20%, rgba(11,94,215,0.12), transparent 45%),
+        radial-gradient(circle at 85% 80%, rgba(99,102,241,0.12), transparent 50%);
+    z-index:-1;
+    animation:bgMove 20s ease-in-out infinite alternate;
+}
+
+@keyframes bgMove{
+    from{transform:translateY(0);}
+    to{transform:translateY(-80px);}
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+/* =========================
+   HEADER
+========================= */
+.header{
+    background:linear-gradient(135deg,#0b5ed7,#1e40af);
+    color:#fff;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 40px;
+    position:sticky;
+    top:0;
+    z-index:100;
+    box-shadow:0 12px 40px rgba(0,0,0,0.25);
+    transition:box-shadow 0.4s ease;
+}
+
+.header:hover{
+    box-shadow:0 18px 55px rgba(0,0,0,0.35);
+}
+
+.header .logo{
+    font-size:1.9rem;
+    font-weight:700;
+    letter-spacing:0.6px;
+}
+
+.header nav{
+    display:flex;
+    align-items:center;
+}
+
+.header nav span{
+    margin-right:20px;
+    font-size:0.95rem;
+    opacity:0.9;
+}
+
+.header nav a{
+    margin-left:25px;
+    font-weight:500;
+    position:relative;
+    padding-bottom:4px;
+}
+
+.header nav a::after{
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:0;
+    width:0%;
+    height:2px;
+    background:#fff;
+    transition:width 0.3s ease;
+}
+
+.header nav a:hover::after{
+    width:100%;
+}
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+.container{
+    max-width:1200px;
+    margin:60px auto 100px;
+    padding:0 20px;
+}
+
+/* =========================
+   HERO CARD
+========================= */
+.hero{
+    position:relative;
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:space-between;
+    gap:40px;
+    background:#fff;
+    padding:50px;
+    border-radius:26px;
+    box-shadow:0 30px 80px rgba(0,0,0,0.15);
+    overflow:hidden;
+    animation:heroFloat 6s ease-in-out infinite;
+}
+
+@keyframes heroFloat{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-10px);}
+}
+
+/* LIGHT SWEEP */
+.hero::before{
+    content:"";
+    position:absolute;
+    inset:-50%;
+    background:linear-gradient(
+        120deg,
+        transparent 30%,
+        rgba(11,94,215,0.12),
+        transparent 70%
+    );
+    animation:lightSweep 8s linear infinite;
+}
+
+@keyframes lightSweep{
+    from{transform:translateX(-40%);}
+    to{transform:translateX(40%);}
+}
+
+/* =========================
+   HERO TEXT
+========================= */
+.hero-text{
+    flex:1 1 450px;
+    position:relative;
+    z-index:2;
+}
+
+.hero-text h1{
+    font-size:2.6rem;
+    color:#0b5ed7;
+    margin-bottom:20px;
+    position:relative;
+}
+
+.hero-text h1::after{
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:-10px;
+    width:70px;
+    height:4px;
+    border-radius:999px;
+    background:linear-gradient(90deg,#0b5ed7,#6366f1);
+    animation:glowLine 2.8s infinite alternate;
+}
+
+@keyframes glowLine{
+    from{opacity:0.4;width:45px;}
+    to{opacity:1;width:90px;}
+}
+
+.hero-text p{
+    font-size:1.1rem;
+    color:#555;
+    margin-bottom:30px;
+    max-width:520px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+.flex-center{
+    display:flex;
+    gap:22px;
+    flex-wrap:wrap;
+}
+
+.main-btn{
+    position:relative;
+    padding:14px 38px;
+    background:linear-gradient(135deg,#0b5ed7,#1e40af);
+    color:#fff;
+    border:none;
+    border-radius:16px;
+    font-size:1rem;
+    font-weight:600;
+    cursor:pointer;
+    overflow:hidden;
+    box-shadow:0 16px 35px rgba(11,94,215,0.45);
+    transition:transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.main-btn:hover{
+    transform:translateY(-4px) scale(1.04);
+    box-shadow:0 26px 65px rgba(11,94,215,0.6);
+}
+
+/* RIPPLE */
+.main-btn::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:radial-gradient(circle, rgba(255,255,255,0.35) 10%, transparent 11%);
+    background-size:300% 300%;
+    opacity:0;
+}
+
+.main-btn:hover::after{
+    opacity:1;
+    animation:ripple 1.3s linear;
+}
+
+@keyframes ripple{
+    from{background-position:0% 0%;}
+    to{background-position:100% 100%;}
+}
+
+/* =========================
+   HERO IMAGE
+========================= */
+.hero-image{
+    flex:1 1 420px;
+    text-align:center;
+    position:relative;
+    z-index:2;
+}
+
+.hero-image img{
+    max-width:100%;
+    border-radius:22px;
+    box-shadow:0 25px 60px rgba(0,0,0,0.25);
+    animation:imageFloat 7s ease-in-out infinite;
+    transition:filter 0.5s ease;
+}
+
+.hero-image img:hover{
+    filter:saturate(1.1) contrast(1.05);
+}
+
+@keyframes imageFloat{
+    0%,100%{transform:translateY(0) scale(1);}
+    50%{transform:translateY(-14px) scale(1.04);}
+}
+
+/* =========================
+   FOOTER
+========================= */
+.footer{
+    background:linear-gradient(135deg,#0b5ed7,#1e40af);
+    color:#fff;
+    padding:24px 40px;
+    text-align:center;
+    font-size:0.9rem;
+    box-shadow:0 -14px 40px rgba(0,0,0,0.25);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media(max-width:900px){
+    .hero{
+        flex-direction:column;
+        text-align:center;
+        padding:40px 28px;
+    }
+
+    .hero-text h1{
+        font-size:2.2rem;
+    }
+    .flex-center{
+        justify-content:center;
+    }
+}
